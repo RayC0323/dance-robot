@@ -1,44 +1,246 @@
-.md-typeset .grid.cards>ol>li,
-.md-typeset .grid.cards>ul>li,
-.md-typeset .grid>.card {
-    background-color: var(--md-primary-fg-color);
-    border-radius: 1rem;
-    border: 2px solid var(--md-pic-shadow-color);
+.md-typeset .grid.cards > ol > li,
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid > .card,
+.card {
+    background: var(--md-primary-fg-color);
+    border: 1px solid var(--md-pic-shadow-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+    transition: transform 220ms cubic-bezier(.2, .8, .2, 1), border-color 220ms ease, box-shadow 220ms ease;
 }
 
-.md-typeset:hover .grid.cards>ol>li:hover,
-.md-typeset:hover .grid.cards>ul>li:hover,
-.md-typeset .grid>.card:hover {
-    border: 2px solid var(--md-primary-fg-color);
+.md-typeset .grid.cards > ol > li:hover,
+.md-typeset .grid.cards > ul > li:hover,
+.md-typeset .grid > .card:hover,
+.card:hover {
+    border-color: var(--robot-accent);
+    box-shadow: 0 16px 38px rgb(0 110 190 / 18%);
+    transform: translateY(-5px);
 }
 
 name {
-    font-size: 1.45rem;
-    font-weight: 700;
     color: var(--md-default-fg-color);
+    font-size: 1.25rem;
+    font-weight: 700;
     margin-left: 10px;
 }
 
 #card-pic {
+    aspect-ratio: 16 / 10;
+    height: auto;
+    max-width: 100%;
+    object-fit: cover;
+    position: relative;
+    top: 1.5rem;
+    width: 100%;
+}
+
+.robot-grid,
+.project-summary-grid,
+.tech-grid,
+.recruit-contact-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 1.4rem 0 2.4rem;
+}
+
+.tech-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.robot-card,
+.summary-card,
+.tech-card,
+.contact-card {
+    background: color-mix(in srgb, var(--md-primary-fg-color) 88%, transparent);
+    border: 1px solid var(--robot-border);
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgb(0 0 0 / 10%);
+    color: var(--md-default-fg-color) !important;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    transition: transform 220ms cubic-bezier(.2, .8, .2, 1), border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.robot-card::after,
+.summary-card::after,
+.tech-card::after,
+.contact-card::after {
+    background: var(--robot-accent);
+    content: "";
+    height: 2px;
+    inset: auto 0 0;
+    opacity: 0;
+    position: absolute;
+    transform: scaleX(.25);
+    transform-origin: left;
+    transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.robot-card:hover,
+.robot-card:focus-visible,
+.summary-card:hover,
+.summary-card:focus-visible,
+.tech-card:hover,
+.tech-card:focus-visible,
+.contact-card:hover,
+.contact-card:focus-within {
+    border-color: var(--robot-accent);
+    box-shadow: 0 18px 42px rgb(0 128 204 / 18%);
+    transform: translateY(-5px) scale(1.01);
+}
+
+.robot-card:hover::after,
+.robot-card:focus-visible::after,
+.summary-card:hover::after,
+.summary-card:focus-visible::after,
+.tech-card:hover::after,
+.tech-card:focus-visible::after,
+.contact-card:hover::after,
+.contact-card:focus-within::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.robot-card__media {
+    aspect-ratio: 16 / 10;
+    background: #0a0e14;
+    display: block;
+    overflow: hidden;
+}
+
+.robot-card__media img {
+    height: 100%;
+    margin: 0;
+    object-fit: cover;
+    transition: transform 420ms cubic-bezier(.2, .8, .2, 1);
+    width: 100%;
+}
+
+.robot-card__media--art {
+    background: #303338;
+}
+
+.robot-card__media img.cover-art {
+    background: #303338;
+    object-fit: contain;
+    padding: .35rem;
+}
+
+.robot-card:hover .robot-card__media img,
+.robot-card:focus-visible .robot-card__media img {
+    transform: scale(1.04);
+}
+
+.robot-card__body,
+.summary-card,
+.tech-card,
+.contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    padding: 1rem 1.1rem 1.15rem;
+}
+
+.robot-card small,
+.summary-card small,
+.tech-card small,
+.contact-card small {
+    color: var(--robot-accent);
+    font-family: var(--md-code-font-family);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.robot-card strong,
+.summary-card strong,
+.tech-card strong,
+.contact-card strong {
+    color: var(--md-default-fg-color);
+    font-size: 1.15rem;
+    line-height: 1.3;
+}
+
+.robot-card__body > span,
+.summary-card > span,
+.tech-card > span,
+.contact-card > span {
+    color: var(--md-default-fg-color--light);
+    line-height: 1.75;
+}
+
+.robot-card b,
+.tech-card b {
+    color: var(--robot-accent);
+    font-size: .76rem;
+    margin-top: .25rem;
+    transition: transform 220ms ease;
+}
+
+.robot-card:hover b,
+.tech-card:hover b {
+    transform: translateX(3px);
+}
+
+.contact-card strong {
+    font-family: var(--md-code-font-family);
+    font-size: 1.45rem;
+}
+
+.archive-gallery {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 1.6rem;
+}
+
+.archive-gallery figure {
+    background: var(--md-primary-fg-color);
+    border: 1px solid var(--robot-border);
+    border-radius: 8px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.archive-gallery figure p {
+    margin: 0;
+}
+
+.archive-gallery img {
+    aspect-ratio: 4 / 3;
+    display: block;
+    height: auto;
+    margin: 0;
     object-fit: cover;
     width: 100%;
-    height: 11rem;
-    top: 1.5rem;
-    position: relative;
-    max-width: 100%;
 }
 
-.card {
-    background-color: var(--md-primary-fg-color);
-    border-radius: 1rem;
-    border: 2px solid var(--md-pic-shadow-color);
-    display: block;
-    margin: 0;
-    padding: .8rem;
-    transition: border .25s, box-shadow .25s;
+.archive-gallery figcaption {
+    color: var(--md-default-fg-color--light);
+    font-size: .75rem;
+    line-height: 1.65;
+    padding: .75rem .9rem .85rem;
 }
 
-.card:hover {
-    border: 2px solid var(--md-primary-fg-color);
-    box-shadow: var(--md-shadow-z2)
+.archive-gallery--single {
+    grid-template-columns: minmax(0, 42rem);
+}
+
+@media screen and (max-width: 54rem) {
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 40rem) {
+    .robot-grid,
+    .project-summary-grid,
+    .recruit-contact-grid,
+    .archive-gallery {
+        grid-template-columns: 1fr;
+    }
 }
