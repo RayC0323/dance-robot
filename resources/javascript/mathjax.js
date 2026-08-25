@@ -11,9 +11,19 @@ window.MathJax = {
     },
 };
 
-document$.subscribe(() => {
-    MathJax.startup.output.clearCache();
-    MathJax.typesetClear();
-    MathJax.texReset();
-    MathJax.typesetPromise();
-});
+function typesetMath() {
+    if (!window.MathJax?.startup?.promise) return;
+
+    window.MathJax.startup.promise.then(() => {
+        window.MathJax.startup.output?.clearCache?.();
+        window.MathJax.typesetClear?.();
+        window.MathJax.texReset?.();
+        return window.MathJax.typesetPromise?.();
+    });
+}
+
+if (typeof document$ !== "undefined") {
+    document$.subscribe(typesetMath);
+}
+
+window.addEventListener("load", typesetMath, { once: true });

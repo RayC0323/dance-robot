@@ -3,8 +3,6 @@
 
     const root = document.documentElement;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-
     root.classList.add("js");
 
     function initReveal() {
@@ -76,45 +74,21 @@
         });
     }
 
-    function initHeroParallax() {
-        document.querySelectorAll(".site-hero:not([data-parallax-ready])").forEach((hero) => {
-            hero.dataset.parallaxReady = "true";
+    function initHeroImage() {
+        document.querySelectorAll(".site-hero:not([data-hero-ready])").forEach((hero) => {
+            hero.dataset.heroReady = "true";
             const imagePath = hero.dataset.heroImage;
             if (imagePath) {
                 const imageUrl = new URL(imagePath, document.baseURI).href;
                 hero.style.setProperty("--hero-image", `url("${imageUrl}")`);
             }
-            if (reducedMotion.matches || !finePointer.matches) return;
-
-            let frame = 0;
-            let x = 0;
-            let y = 0;
-
-            const render = () => {
-                hero.style.setProperty("--hero-x", `${x}px`);
-                hero.style.setProperty("--hero-y", `${y}px`);
-                frame = 0;
-            };
-
-            hero.addEventListener("pointermove", (event) => {
-                const bounds = hero.getBoundingClientRect();
-                x = ((event.clientX - bounds.left) / bounds.width - .5) * -10;
-                y = ((event.clientY - bounds.top) / bounds.height - .5) * -8;
-                if (!frame) frame = requestAnimationFrame(render);
-            });
-
-            hero.addEventListener("pointerleave", () => {
-                x = 0;
-                y = 0;
-                if (!frame) frame = requestAnimationFrame(render);
-            });
         });
     }
 
     function initSiteEffects() {
         initReveal();
         initCounters();
-        initHeroParallax();
+        initHeroImage();
     }
 
     initSiteEffects();
