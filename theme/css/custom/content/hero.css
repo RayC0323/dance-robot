@@ -49,8 +49,11 @@
     background-position: center;
     background-size: cover;
     content: "";
-    inset: 0;
+    inset: -1%;
     position: absolute;
+    transform: translate3d(var(--hero-x, 0), var(--hero-y, 0), 0) scale(1.015);
+    transition: transform 480ms cubic-bezier(.2, .8, .2, 1);
+    will-change: transform;
     z-index: -2;
 }
 

@@ -3,6 +3,7 @@
 
     const root = document.documentElement;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     root.classList.add("js");
 
     function initReveal() {
@@ -82,6 +83,31 @@
                 const imageUrl = new URL(imagePath, document.baseURI).href;
                 hero.style.setProperty("--hero-image", `url("${imageUrl}")`);
             }
+
+            if (reducedMotion.matches || !finePointer.matches) return;
+
+            let frame = 0;
+            let offsetX = 0;
+            let offsetY = 0;
+
+            const render = () => {
+                hero.style.setProperty("--hero-x", `${offsetX}px`);
+                hero.style.setProperty("--hero-y", `${offsetY}px`);
+                frame = 0;
+            };
+
+            hero.addEventListener("pointermove", (event) => {
+                const bounds = hero.getBoundingClientRect();
+                offsetX = ((event.clientX - bounds.left) / bounds.width - .5) * -14;
+                offsetY = ((event.clientY - bounds.top) / bounds.height - .5) * -10;
+                if (!frame) frame = requestAnimationFrame(render);
+            });
+
+            hero.addEventListener("pointerleave", () => {
+                offsetX = 0;
+                offsetY = 0;
+                if (!frame) frame = requestAnimationFrame(render);
+            });
         });
     }
 
