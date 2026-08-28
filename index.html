@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="refresh" content="0; url=https://dance-robot-base.github.io/">
-  <title>正在跳转</title>
+  <link rel="canonical" href="https://dance-robot-base.github.io/">
+  <title>网站已迁移</title>
   <script>
     const path = location.pathname.replace(/^\/dance-robot\/?/, "/");
     location.replace(`https://dance-robot-base.github.io${path}${location.search}${location.hash}`);
   </script>
 </head>
 <body>
-  <p>正在前往新网站……</p>
+  <p>网站已迁移至 <a href="https://dance-robot-base.github.io/">dance-robot-base.github.io</a>。</p>
 </body>
 </html>
